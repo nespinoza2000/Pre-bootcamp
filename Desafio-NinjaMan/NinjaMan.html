@@ -13,6 +13,7 @@
     <div id="scoreboard">
         <h2>Puntos</h2>
         <p>Puntos: <span id="puntos">0</span></p>
+        <p>Vidas: <span id="vidas">3</span></p>
     </div>
     <script type="text/javascript">
         var world = [
@@ -35,6 +36,50 @@
             3: 'onigiri'
         }
         var puntos = 0;
+        var bluey = {
+            x: 13,
+            y: 9
+        }
+        // codigo para mostrar a bluey en la pantalla
+        function dibujarBluey(){
+            document.getElementById('bluey').style.top = bluey.y * 40 + 'px'
+            document.getElementById('bluey').style.left = bluey.x * 40 + 'px'
+        }
+        dibujarBluey();
+        //Codigo para las vidas de ninjaman en la colicion con bluey
+        var vidas = 3;
+        function verificarColisionBluey(){
+            if (ninjaman.x === bluey.x && ninjaman.y === bluey.y) {
+                vidas--;
+                document.getElementById('vidas').textContent = vidas;
+                if (vidas === 0) {
+                    alert("Game Over");
+                    location.reload(); // Recarga la página para reiniciar el juego
+                } else {
+                    // Devuelve a NinjaMan a su posición inicial
+                    ninjaman.x = 1;
+                    ninjaman.y = 1;
+                    dibujarNinja();
+                }
+            }
+        }
+        // funcion para mover al bluey
+        function calculateBlueyTargetPosition(ninjamanPosition, blueyPosition) {
+            // Calcula la distancia entre la posición de Pac-Man y la posición de Blinky
+            const dx = ninjamanPosition.x - blueyPosition.x;
+            const dy = ninjamanPosition.y - blueyPosition.y;
+
+            // Calcula la ubicación imaginaria de Inky
+            const blueyTargetX = ninjamanPosition.x + 2 * dx;
+            const blueyTargetY = ninjamanPosition.y + 2 * dy;
+
+            return { x: blueyTargetX, y: blueyTargetY };
+        }
+            // Ejemplo de uso
+            const ninjamanPosition = { x: 5, y: 10 };
+            const blueyPosition = { x: 3, y: 7 };
+            const blueyTarget = calculateBlueyTargetPosition(ninjamanPosition, blueyPosition);
+            console.log("Posición imaginaria de Bluey:", blueyTarget);
         // Desafio intermedio -- Generar un mapa aleatorio cada vez que se recarga la pagina
         function randomWorld() {
             for (var row = 0; row < 11; row++) {
@@ -67,7 +112,7 @@
             document.getElementById('ninjaman').style.top = ninjaman.y * 40 + 'px'
             document.getElementById('ninjaman').style.left = ninjaman.x * 40 + 'px'
         }
-        dibujarNinja()
+        dibujarNinja();
         document.onkeydown = function(e){
             if(e.keyCode == 37){
                 if(world[ninjaman.y][ninjaman.x - 1] != 1){
@@ -97,36 +142,12 @@
             }
             document.getElementById('puntos').textContent = puntos;
             world[ninjaman.y][ninjaman.x] = 0;
-            dibujarMundo()
-            dibujarNinja()
+            dibujarMundo();
+            dibujarNinja();
         }
         puntos();  //Contador de puntos o Scoreboard
-        var bluey = document.getElementById('bluey');
-        var blueyX = 2; // Posición inicial de bluey en el eje X
-        var blueyY = 1; // Posición inicial de bluey en el eje Y
-        function moveBluey() {
-            // Calcula la diferencia entre las posiciones de bluey y ninjaman
-            var dx = ninjaman.x - blueyX;
-            var dy = ninjaman.y - blueyY;
-            // Calcula la distancia entre bluey y ninjaman
-            var distance = Math.sqrt(dx * dx + dy * dy);
-            // Define la velocidad de movimiento de bluey
-            var speed = 1000; // Puedes ajustar la velocidad según tus preferencias
-            // Calcula el paso de movimiento para bluey
-            var stepX = speed * (dx / distance);
-            var stepY = speed * (dy / distance);
-            // Actualiza la posición de bluey
-            blueyX += stepX;
-            blueyY += stepY;
-            // Aplica la posición a bluey utilizando transform CSS para suavizar la animación
-            bluey.style.transform = `translate(${blueyX * 40}px, ${blueyY * 40}px)`;
-            // Continúa la animación si bluey no alcanza a ninjaman
-            if (distance > 1) {
-                requestAnimationFrame(moveBluey);
-            }
-        }
-        // Inicia la animación cuando se carga la página
-        moveBluey();
+        setInterval(moverBluey, 500); // Mover el fantasma cada 500 ms
+        setInterval(verificarColisionBluey, 100); // Verificar colisión con el fantasma cada 100 ms
     </script>
 </body>
 </html>
