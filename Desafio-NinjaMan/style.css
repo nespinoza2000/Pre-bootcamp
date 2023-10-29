@@ -52,6 +52,55 @@
     top: 40px;
 }
 
+#bluey {
+    background-color: black;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background-image: url('./image/bluey.gif');
+    background-size: contain;
+    position: absolute;
+    left: 200px;
+    top: 200px
+}
+
+/*#pinky {
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background-image: url('./image/pinky.gif');
+    background-size: contain;
+    position: absolute;
+    left: 100px;
+    top: 100px
+}*/
+
+/*#pumpky {
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background-image: url('./image/pumpky.gif');
+    background-size: contain;
+    position: absolute;
+    left: 80px;
+    top: 80px
+}*/
+
+/*#red {
+    background-color: transparent;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background-image: url('./image/red.gif');
+    background-size: contain;
+    position: absolute;
+    left: 80px;
+    top: 80px
+}*/
+
+
 #scoreboard {
     background-color: #333;
     /* Color de fondo del tablero */
